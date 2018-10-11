@@ -1,11 +1,13 @@
 function isLeapYear(year: number) {
-  if (year % 4 === 0) {
-    if (year % 100 === 0) {
-      return year % 400 === 0 ? true : false;
-    }
-    return true;
+  const isDivisibleBy4: boolean = year % 4 === 0;
+  const isDivisibleBy100: boolean = year % 100 === 0;
+  const isDivisibleBy400: boolean = year % 400 === 0;
+
+  if (isDivisibleBy100) {
+    return isDivisibleBy400 ? true : false;
   }
-  return false;
+
+  return isDivisibleBy4 ? true : false;
 }
 
 export default isLeapYear;

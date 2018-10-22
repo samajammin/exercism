@@ -1,36 +1,21 @@
 export default class Triangle {
-  sides: number[];
+  sortedSides: number[];
 
   constructor(...sides: number[]) {
-    this.sides = sides;
+    this.sortedSides = sides.sort((a, b) => a - b);
   }
 
-  kind(): string {
-    if (this.sides.length !== 3) {
-      throw new Error('Invalid number of sides');
+  kind() {
+    const [a, b, c] = this.sortedSides;
+
+    if (a <= 0 || a + b <= c) {
+      throw new Error('Invalid triangle');
     }
-
-    let sideCounter = new Map<number, number>();
-
-    this.sides.forEach((side, idx) => {
-      const sideCount: number = sideCounter.get(side) || 0;
-      sideCounter.set(side, sideCount + 1);
-
-      const otherSides: number[] = this.sides.slice();
-      otherSides.splice(idx, 1);
-
-      if (side <= 0 || side >= otherSides[0] + otherSides[1]) {
-        throw new Error('Invalid length of sides');
-      }
-    });
-
-    for (let key of sideCounter.keys()) {
-      if (sideCounter.get(key) === 3) {
-        return 'equilateral';
-      }
-      if (sideCounter.get(key) === 2) {
-        return 'isosceles';
-      }
+    if (a === c) {
+      return 'equilateral';
+    }
+    if (a === b || b === c) {
+      return 'isosceles';
     }
     return 'scalene';
   }

@@ -1,5 +1,5 @@
 class SimpleCipher {
-  key: string;
+  readonly key: string;
   readonly alphabet: string = 'abcdefghijklmnopqrstuvwxyz';
 
   constructor(key?: string) {
@@ -7,22 +7,16 @@ class SimpleCipher {
   }
 
   private genKey() {
-    let key: string = '';
-    for (let i = 0; i < 101; i++) {
-      const int: number = Math.floor(Math.random() * 26);
-      key += this.intToChar(int);
-    }
-    return key;
+    return Array.from(Array(100))
+      .map(() => Math.floor(Math.random() * 26))
+      .map(i => this.intToChar(i))
+      .join('');
   }
 
   private validateKey(key: string) {
-    if (!key) {
+    const isValid = /^[a-z]+$/.test(key);
+    if (!isValid) {
       throw 'Bad key';
-    }
-    for (let char of key) {
-      if (this.alphabet.indexOf(char) === -1) {
-        throw 'Bad key';
-      }
     }
     return key;
   }
@@ -40,19 +34,21 @@ class SimpleCipher {
   }
 
   private convert(str: string, isEncode: boolean): string {
-    let result: string = '';
-    for (let i = 0; i < str.length; i++) {
-      let charInt: number = this.charToInt(str[i]);
-      const keyIndex: number = i < this.key.length ? i : i % this.key.length;
-      const keyCharInt: number = this.charToInt(this.key[keyIndex]);
-      if (isEncode) {
-        charInt += keyCharInt;
-      } else {
-        charInt -= keyCharInt;
-      }
-      result += this.intToChar(charInt);
-    }
-    return result;
+    return str
+      .split('')
+      .map((char, idx) => {
+        let charInt: number = this.charToInt(char);
+        const keyIdx: number =
+          idx < this.key.length ? idx : idx % this.key.length;
+        const keyCharInt: number = this.charToInt(this.key[keyIdx]);
+        if (isEncode) {
+          charInt += keyCharInt;
+        } else {
+          charInt -= keyCharInt;
+        }
+        return this.intToChar(charInt);
+      })
+      .join('');
   }
 
   encode(message: string): string {

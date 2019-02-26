@@ -1,16 +1,6 @@
-class Isogram {
+export default class Isogram {
   public static isIsogram(input: string): boolean {
-    const normalized: string = input.replace(/-|\s/g, '');
-
-    for (const char of normalized) {
-      const re = new RegExp(char, 'ig');
-      const match = normalized.match(re);
-      if (!match || match.length > 1) {
-        return false;
-      }
-    }
-    return true;
+    const normalized: string = input.toLowerCase().replace(/-|\s/g, '');
+    return new Set(normalized).size === normalized.length;
   }
 }
-
-export default Isogram;

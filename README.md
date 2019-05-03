@@ -7,3 +7,11 @@
 - [Language spec](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)
 - [Official docs](http://www.typescriptlang.org/docs/home.html)
 - [Playground](http://www.typescriptlang.org/play/)
+
+## Go
+
+- [Excercism track](https://exercism.io/my/tracks/go)
+- [Go by Example](https://gobyexample.com)
+- [Language spec](https://golang.org/ref/spec)
+- [Official docs](https://golang.org/doc/)
+- [Playground](https://play.golang.org)

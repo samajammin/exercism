@@ -8,28 +8,25 @@ import (
 type Kind int
 
 const (
-	// NaT == not a triangle
-	NaT Kind = 0
-	// Equ == equilateral
-	Equ Kind = 1
-	// Iso == isosceles
-	Iso Kind = 2
-	// Sca == scalene
-	Sca Kind = 3
+	// NaT = not a triangle (0)
+	NaT Kind = iota
+	// Equ = equilateral (1)
+	Equ
+	// Iso = isosceles (2)
+	Iso
+	// Sca = scalene (3)
+	Sca
 )
 
-func isSideInvalid(x float64) bool {
-	if x <= 0 || math.IsNaN(x) || math.IsInf(x, 0) {
-		return true
-	}
-	return false
+func isValidLength(length float64) bool {
+	return length > 0 && length < math.Inf(1)
 }
 
 // KindFromSides calculates the Kind of triangle from its sides
 func KindFromSides(a, b, c float64) Kind {
-	hasInvalidSide := isSideInvalid(a) || isSideInvalid(b) || isSideInvalid(c)
-	hasTooLongSide := a > b+c || b > a+c || c > a+b
-	if hasInvalidSide || hasTooLongSide {
+	hasValidSides := isValidLength(a) && isValidLength(b) && isValidLength(c)
+	violatesTriangleInequality := a > b+c || b > a+c || c > a+b
+	if !hasValidSides || violatesTriangleInequality {
 		return NaT
 	}
 	if a == b && b == c {

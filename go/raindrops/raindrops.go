@@ -1,10 +1,11 @@
 package raindrops
 
-import "strconv"
+import (
+	"strconv"
+)
 
-// Convert converts a number to string depending on its factors
-func Convert(num int) string {
-	str := ""
+// Convert converts a number to string depending on its factors.
+func Convert(num int) (str string) {
 	if num%3 == 0 {
 		str += "Pling"
 	}

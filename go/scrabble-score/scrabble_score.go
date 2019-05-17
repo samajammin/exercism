@@ -3,38 +3,38 @@ package scrabble
 import "unicode"
 
 var letterScores = map[rune]int{
-	97:  1,
-	98:  3,
-	99:  3,
-	100: 2,
-	101: 1,
-	102: 4,
-	103: 2,
-	104: 4,
-	105: 1,
-	106: 8,
-	107: 5,
-	108: 1,
-	109: 3,
-	110: 1,
-	111: 1,
-	112: 3,
-	113: 10,
-	114: 1,
-	115: 1,
-	116: 1,
-	117: 1,
-	118: 4,
-	119: 4,
-	120: 8,
-	121: 4,
-	122: 10,
+	'a': 1,
+	'e': 1,
+	'i': 1,
+	'o': 1,
+	'u': 1,
+	'l': 1,
+	'n': 1,
+	'r': 1,
+	's': 1,
+	't': 1,
+	'd': 2,
+	'g': 2,
+	'b': 3,
+	'c': 3,
+	'm': 3,
+	'p': 3,
+	'f': 4,
+	'h': 4,
+	'v': 4,
+	'w': 4,
+	'y': 4,
+	'k': 5,
+	'j': 8,
+	'x': 8,
+	'q': 10,
+	'z': 10,
 }
 
 // Score computes the Scrabble value of a word.
 func Score(word string) (score int) {
-	for _, theRune := range word {
-		score += letterScores[unicode.ToLower(theRune)]
+	for _, letter := range word {
+		score += letterScores[unicode.ToLower(letter)]
 	}
 	return score
 }

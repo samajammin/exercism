@@ -9,26 +9,25 @@ type Lists []Ints
 // Strings is a collection of strings
 type Strings []string
 
-// Discard checks a predicate on every int of a collection,
-// returning a new collection of ints where the predicate is false.
-func (collection Ints) Discard(predicate func(int) bool) (res Ints) {
+func (collection Ints) filter(predicate func(int) bool, compareVal bool) (res Ints) {
 	for _, item := range collection {
-		if predicate(item) == false {
+		if predicate(item) == compareVal {
 			res = append(res, item)
 		}
 	}
 	return res
 }
 
+// Discard checks a predicate on every int of a collection,
+// returning a new collection of ints where the predicate is false.
+func (collection Ints) Discard(predicate func(int) bool) (res Ints) {
+	return collection.filter(predicate, false)
+}
+
 // Keep checks a predicate on every int of a collection,
 // returning a new collection of ints where the predicate is true.
 func (collection Ints) Keep(predicate func(int) bool) (res Ints) {
-	for _, item := range collection {
-		if predicate(item) == true {
-			res = append(res, item)
-		}
-	}
-	return res
+	return collection.filter(predicate, true)
 }
 
 // Keep checks a predicate on every string of a collection,

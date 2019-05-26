@@ -7,8 +7,10 @@ func IsIsogram(word string) bool {
 	letterSet := make(map[rune]bool)
 	for _, letter := range word {
 		lower := unicode.ToLower(letter)
-		isValidDup := lower == '-' || lower == ' '
-		if letterSet[lower] && !isValidDup {
+		if lower == '-' || lower == ' ' {
+			continue
+		}
+		if letterSet[lower] {
 			return false
 		}
 		letterSet[lower] = true

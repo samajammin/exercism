@@ -1,13 +1,10 @@
 export default class Clock {
-  HOURS_PER_DAY = 24
-  MINUTES_PER_HOUR = 60
+  private static MINUTES_PER_HOUR = 60
+  private static MINUTES_PER_DAY = Clock.MINUTES_PER_HOUR * 24
+  private totalMinutes: number
 
-  private hours: number
-  private minutes: number
-
-  constructor(hours: number, minutes?: number) {
-    this.hours = hours
-    this.minutes = minutes || 0
+  constructor(hours: number, minutes: number = 0) {
+    this.totalMinutes = minutes + hours * Clock.MINUTES_PER_HOUR
   }
 
   private pad(num: number): string {
@@ -15,25 +12,23 @@ export default class Clock {
   }
 
   public toString(): string {
-    const addedHours = Math.floor(this.minutes / this.MINUTES_PER_HOUR)
-    const remainingMinutes =
-      this.minutes < 0
-        ? this.MINUTES_PER_HOUR + (this.minutes % this.MINUTES_PER_HOUR)
-        : this.minutes % this.MINUTES_PER_HOUR
-    const initialHours = (this.hours + addedHours) % this.HOURS_PER_DAY
-    const finalHours =
-      initialHours < 0
-        ? this.HOURS_PER_DAY + (initialHours % this.HOURS_PER_DAY)
-        : initialHours
-    return `${this.pad(finalHours)}:${this.pad(remainingMinutes)}`
+    const remainingMinutes = this.totalMinutes % Clock.MINUTES_PER_DAY
+    const adjustedMinutes =
+      remainingMinutes < 0
+        ? remainingMinutes + Clock.MINUTES_PER_DAY
+        : remainingMinutes
+
+    const hours = Math.floor(adjustedMinutes / Clock.MINUTES_PER_HOUR)
+    const minutes = adjustedMinutes % Clock.MINUTES_PER_HOUR
+    return `${this.pad(hours)}:${this.pad(minutes)}`
   }
 
   public plus(minutes: number): Clock {
-    this.minutes += minutes
+    this.totalMinutes += minutes
     return this
   }
   public minus(minutes: number): Clock {
-    this.minutes -= minutes
+    this.totalMinutes -= minutes
     return this
   }
   public equals(that: Clock): boolean {

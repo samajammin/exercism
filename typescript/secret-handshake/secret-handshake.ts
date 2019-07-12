@@ -1,34 +1,27 @@
 export default class HandShake {
-  private readonly secret: number
+  private readonly handShakeCommands: string[]
 
   constructor(secret: number) {
-    this.secret = secret
+    const commands: string[] = []
+    if (secret & 1) {
+      commands.push('wink')
+    }
+    if (secret & 2) {
+      commands.push('double blink')
+    }
+    if (secret & 4) {
+      commands.push('close your eyes')
+    }
+    if (secret & 8) {
+      commands.push('jump')
+    }
+    if (secret & 16) {
+      commands.reverse()
+    }
+    this.handShakeCommands = commands
   }
 
   public commands(): string[] {
-    const commands: string[] = []
-    let binary = Number(this.secret.toString(2))
-    let shouldReverse = false
-
-    while (binary > 0) {
-      if (binary >= 10000) {
-        shouldReverse = !shouldReverse
-        binary -= 10000
-      } else if (binary >= 1000) {
-        commands.unshift('jump')
-        binary -= 1000
-      } else if (binary >= 100) {
-        commands.unshift('close your eyes')
-        binary -= 100
-      } else if (binary >= 10) {
-        commands.unshift('double blink')
-        binary -= 10
-      } else if (binary >= 1) {
-        commands.unshift('wink')
-        binary -= 1
-      }
-    }
-
-    return shouldReverse ? commands.reverse() : commands
+    return this.handShakeCommands
   }
 }

@@ -94,4 +94,9 @@ var testCases = []struct {
 		":9",
 		false,
 	},
+	{
+		"carefully crafted code with symbols is still invalid",
+		"!232",
+		false,
+	},
 }

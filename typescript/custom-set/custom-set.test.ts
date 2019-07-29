@@ -134,6 +134,7 @@ describe('CustomSet', () => {
     it('adding an existing element does not change the set', () => {
       const actual = new CustomSet([1, 2, 3]).add(3)
       const expected = new CustomSet([1, 2, 3])
+      console.log({actual, expected})
       expect(actual.eql(expected)).toBeTruthy()
     })
   })

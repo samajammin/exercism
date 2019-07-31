@@ -1,7 +1,6 @@
 package luhn
 
 import (
-	"strconv"
 	"strings"
 )
 
@@ -18,8 +17,8 @@ func Valid(input string) bool {
 	sum := 0
 
 	for i := length - 1; i >= 0; i-- {
-		num, err := strconv.ParseUint(string(runes[i]), 10, 64)
-		if err != nil {
+		num := int(runes[i] - '0')
+		if num < 0 || num > 9 {
 			return false
 		}
 		isSecondDigit := (length-i)%2 == 0
@@ -29,8 +28,8 @@ func Valid(input string) bool {
 				num -= 9
 			}
 		}
-		ints[i] = int(num)
-		sum += int(num)
+		ints[i] = num
+		sum += num
 	}
 	return sum%10 == 0
 }

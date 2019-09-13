@@ -1,12 +1,7 @@
 export const solve = (x, y) => {
-  const distanceFromCenter = Math.sqrt(x ** 2 + y ** 2);
-  if (distanceFromCenter <= 1) {
-    return 10;
-  } else if (distanceFromCenter <= 5) {
-    return 5;
-  } else if (distanceFromCenter <= 10) {
-    return 1;
-  } else {
-    return 0;
-  }
+  const r = x * x + y * y;
+  if (r > 100) return 0;
+  if (r > 25) return 1;
+  if (r > 1) return 5;
+  return 10;
 };
